@@ -31,14 +31,14 @@ namespace Magnus.Emails.Services
             await _smtpClient.SendMailAsync(message);
         }
 
-        public async Task SendRegistrationEmail(string url, string email, string token, string template)
+        public async Task SendEmail()
         {
-            var message = new MailMessage(_template.Credentials.Username, email)
+            var message = new MailMessage(_template.Credentials.Username, _template.Receiver!)
             {
-                Subject = $"Welcome to {_template.SiteName}"
+                Subject = _template.Subject
             };
             message.IsBodyHtml = true;
-            message.AlternateViews.Add(GetEmbeddedImage($"{_template.LogoPath}", template, token));
+            message.AlternateViews.Add(GetEmbeddedImage());
 
             await _smtpClient.SendMailAsync(message);
         }
@@ -50,23 +50,24 @@ namespace Magnus.Emails.Services
                 Subject = $"Reset password for {_template.SiteName}"
             };
             message.IsBodyHtml = true;
-            message.AlternateViews.Add(GetEmbeddedImage($"{_template.LogoPath}", template, token));
+            message.AlternateViews.Add(GetEmbeddedImage());
 
             await _smtpClient.SendMailAsync(message);
         }
 
-        private static AlternateView GetEmbeddedImage(string filePath, string template, string token)
+        private AlternateView GetEmbeddedImage()
         {
-            LinkedResource res = new(filePath)
+            // TO DO: Default path for default logo if no LogoPath is passed
+            LinkedResource res = new(_template.LogoPath ?? "")
             {
                 ContentType = new ContentType()
                 {
                     MediaType = "image/png",
-                    Name = filePath.Split('/').LastOrDefault()
+                    Name = _template.LogoPath?.Split('/').LastOrDefault()
                 },
                 ContentId = Guid.NewGuid().ToString()
             };
-            string htmlBody = string.Format(template, res.ContentId, token);
+            var htmlBody = 
             AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
             alternateView.LinkedResources.Add(res);
             return alternateView;

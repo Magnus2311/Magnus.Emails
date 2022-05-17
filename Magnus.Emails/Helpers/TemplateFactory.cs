@@ -10,7 +10,7 @@ namespace Magnus.Emails.Helpers
     {
         public TemplateFactory(IConfiguration configuration)
         {
-            Configuration = configuration
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; set; }
@@ -20,7 +20,7 @@ namespace Magnus.Emails.Helpers
             switch(templateType)
             {
                 case TemplateType.SsoRegistrationDefault:
-                    return new ConfirmationEmailTemplate(InitCredentials(senderType));
+                    return new WarehouseTemplate(InitCredentials(senderType));
                 default:
                     throw new NoTemplateSelectedException();
             }

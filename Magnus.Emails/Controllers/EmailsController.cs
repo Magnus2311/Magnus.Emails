@@ -6,7 +6,7 @@ namespace Magnus.Emails.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EmailsController
+    public class EmailsController : ControllerBase
     {
         private readonly EmailsSender _emailsSender;
 
@@ -19,6 +19,7 @@ namespace Magnus.Emails.Controllers
         public async Task<IActionResult> SendRegistrationEmail(RegistrationEmailDTO registrationEmailDTO)
         {
             await _emailsSender.SendEmail(registrationEmailDTO);
+            return Ok();
         }
     }
 }

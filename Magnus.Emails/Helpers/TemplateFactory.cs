@@ -17,10 +17,10 @@ namespace Magnus.Emails.Helpers
 
         public ITemplate InitTemplate(TemplateType templateType, SenderType senderType)
         {
-            switch(templateType)
+            switch (templateType)
             {
                 case TemplateType.SsoRegistrationDefault:
-                    return new WarehouseTemplate(InitCredentials(senderType));
+                    return new WarehouseRegistrationTemplate(InitCredentials(senderType));
                 default:
                     throw new NoTemplateSelectedException();
             }
@@ -31,7 +31,7 @@ namespace Magnus.Emails.Helpers
             switch (senderType)
             {
                 case SenderType.Warehouse:
-                    return new Credentials(Configuration[$"{nameof(senderType)}_Username"], Configuration[$"{nameof(senderType)}_Password"]);
+                    return new Credentials(Configuration[$"{senderType.ToString()}:Email:Username"], Configuration[$"{senderType.ToString()}:Email:Password"]);
                 default:
                     return new Credentials(Configuration[$"Username"], Configuration[$"Password"]);
             }

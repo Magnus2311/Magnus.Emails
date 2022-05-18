@@ -2,12 +2,13 @@
 
 namespace Magnus.Emails.Templates.SSO
 {
-    public class WarehouseTemplate : BaseTemplate
+    public class WarehouseRegistrationTemplate : BaseTemplate
     {
-        public WarehouseTemplate(Credentials credentials) : base(credentials)
+        public WarehouseRegistrationTemplate(Credentials credentials) : base(credentials)
         {
-            SiteName = "Warehouse";
-            LogoPath = "~/";
+            Subject = "Email Confirmation for Magnus Warehouse";
+            SiteName = "Magnus Warehouse";
+            LogoPath = "./wwwroot/logos/warehouse/warehouse-flat-logo.png";
         }
     }
 }

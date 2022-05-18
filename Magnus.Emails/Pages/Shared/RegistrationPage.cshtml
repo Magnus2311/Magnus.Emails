@@ -1,0 +1,19 @@
+@page
+@model RegistrationPageModel
+@inject IConfiguration Configuration
+@{
+
+    ViewData["Title"] = "RegistrationPage";
+    var emailConfirmationUrl = Configuration["Magnus:URLS:SSO:EmailConfirmation"];
+}
+
+<div style="display: grid; place-items: center; width: 30rem; margin: 0 auto">
+    <img src="cid:@Model.ContentId" alt="Logo" style="width: 400px; height: 130px" />
+    <h3>Confirm email for @Model.Template.SiteName</h3>
+    <div>
+        You are receiving this email in order to confirm your address.
+    </div>
+    <a href="@emailConfirmationUrl?email=@Model.Template.Receiver&token=@Model.Template.CallbackToken">
+        Confirm Email
+    </a>
+</div>

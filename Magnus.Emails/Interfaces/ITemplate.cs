@@ -6,8 +6,8 @@ namespace Magnus.Emails.Interfaces
     {
         public Credentials Credentials { get; }
         public string? Subject { get; }
-        public string? Receiver { get; }
-        public string? CallbackToken { get; }
+        public string? Receiver { get; set; }
+        public string? CallbackToken { get; set; }
         public string? SiteName { get; }
         public string? LogoPath { get; }
     }

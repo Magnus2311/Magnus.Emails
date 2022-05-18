@@ -1,4 +1,5 @@
 ﻿using Magnus.Emails.Interfaces;
+using Magnus.Emails.Pages;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -9,10 +10,12 @@ namespace Magnus.Emails.Services
     {
         private readonly SmtpClient _smtpClient;
         private readonly ITemplate _template;
+        private readonly IViewRenderService _viewRenderService;
 
-        public GmailSmtpEmailsService(ITemplate template)
+        public GmailSmtpEmailsService(ITemplate template, IViewRenderService viewRenderService)
         {
             _template = template;
+            _viewRenderService = viewRenderService;
             _smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
@@ -38,7 +41,7 @@ namespace Magnus.Emails.Services
                 Subject = _template.Subject
             };
             message.IsBodyHtml = true;
-            message.AlternateViews.Add(GetEmbeddedImage());
+            message.AlternateViews.Add(await GetEmbeddedImage());
 
             await _smtpClient.SendMailAsync(message);
         }
@@ -50,25 +53,24 @@ namespace Magnus.Emails.Services
                 Subject = $"Reset password for {_template.SiteName}"
             };
             message.IsBodyHtml = true;
-            message.AlternateViews.Add(GetEmbeddedImage());
+            message.AlternateViews.Add(await GetEmbeddedImage());
 
             await _smtpClient.SendMailAsync(message);
         }
 
-        private AlternateView GetEmbeddedImage()
+        private async Task<AlternateView> GetEmbeddedImage()
         {
-            // TO DO: Default path for default logo if no LogoPath is passed
-            LinkedResource res = new(_template.LogoPath ?? "")
+            LinkedResource res = new LinkedResource(_template.LogoPath ?? "")
             {
-                ContentType = new ContentType()
-                {
-                    MediaType = "image/png",
-                    Name = _template.LogoPath?.Split('/').LastOrDefault()
-                },
                 ContentId = Guid.NewGuid().ToString()
             };
-            var htmlBody = 
-            AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
+            res.ContentType = new ContentType()
+            {
+                MediaType = "image/png",
+                Name = "logo_transparent.png",
+            };
+            var htmlBody = await _viewRenderService.RenderToStringAsync("RegistrationPage", new RegistrationPageModel(_template, res.ContentId));
+            var alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
             alternateView.LinkedResources.Add(res);
             return alternateView;
         }

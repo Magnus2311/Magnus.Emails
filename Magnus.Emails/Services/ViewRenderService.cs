@@ -15,7 +15,6 @@ namespace Magnus.Emails.Services
     {
         private readonly IRazorViewEngine _razorViewEngine;
         private readonly ITempDataProvider _tempDataProvider;
-        private readonly IServiceProvider _serviceProvider;
         private readonly IHttpContextAccessor _httpContext;
         private readonly IActionContextAccessor _actionContext;
         private readonly IRazorPageActivator _activator;
@@ -30,7 +29,6 @@ namespace Magnus.Emails.Services
         {
             _razorViewEngine = razorViewEngine;
             _tempDataProvider = tempDataProvider;
-            _serviceProvider = serviceProvider;
 
             _httpContext = httpContext;
             _actionContext = actionContext;
@@ -90,7 +88,6 @@ namespace Magnus.Emails.Services
                 page.PageContext = new PageContext
                 {
                     ViewData = viewContext.ViewData
-
                 };
 
                 page.ViewContext = viewContext;

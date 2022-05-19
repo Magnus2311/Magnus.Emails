@@ -1,5 +1,6 @@
 ﻿using Magnus.Emails.Models.DTOs;
 using Magnus.Emails.Services.ServicesSenders;
+using Magnus.Emails.Templates.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Magnus.Emails.Controllers
@@ -18,7 +19,7 @@ namespace Magnus.Emails.Controllers
         [HttpPost]
         public async Task<IActionResult> SendRegistrationEmail(RegistrationEmailDTO registrationEmailDTO)
         {
-            await _emailsSender.SendEmail(registrationEmailDTO);
+            await _emailsSender.SendEmail(TemplateType.SsoRegistrationDefault, registrationEmailDTO);
             return Ok();
         }
     }

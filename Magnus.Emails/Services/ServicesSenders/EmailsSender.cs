@@ -1,6 +1,7 @@
 ﻿using Magnus.Emails.Helpers;
 using Magnus.Emails.Interfaces;
 using Magnus.Emails.Models.DTOs;
+using Magnus.Emails.Templates.Helpers;
 
 namespace Magnus.Emails.Services.ServicesSenders
 {
@@ -15,9 +16,9 @@ namespace Magnus.Emails.Services.ServicesSenders
             _viewRenderService = viewRenderService;
         }
 
-        public async Task SendEmail(RegistrationEmailDTO registrationEmailDTO)
+        public async Task SendEmail(TemplateType templateType, RegistrationEmailDTO registrationEmailDTO)
         {
-            var template = _templateFactory.InitTemplate(registrationEmailDTO.TemplateType, registrationEmailDTO.SenderType);
+            var template = _templateFactory.InitTemplate(templateType, registrationEmailDTO.SenderType);
             template.Receiver = registrationEmailDTO.Email;
             template.CallbackToken = registrationEmailDTO.Token;
             await new GmailSmtpEmailsService(template, _viewRenderService).SendEmail();

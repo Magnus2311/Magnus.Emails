@@ -4,7 +4,7 @@
 @{
 
     ViewData["Title"] = "RegistrationPage";
-    var emailConfirmationUrl = Configuration["Magnus:URLS:SSO:EmailConfirmation"];
+    var emailConfirmationUrl = Configuration["Magnus:URLS:SSO:Api"];
 }
 
 <div style="display: grid; place-items: center; width: 30rem; margin: 0 auto">
@@ -13,7 +13,7 @@
     <div>
         You are receiving this email in order to confirm your address.
     </div>
-    <a href="@emailConfirmationUrl?email=@Model.Template.Receiver&token=@Model.Template.CallbackToken">
+    <a href="@emailConfirmationUrl/users/confirm-email?token=@Model.Template.CallbackToken">
         Confirm Email
     </a>
 </div>

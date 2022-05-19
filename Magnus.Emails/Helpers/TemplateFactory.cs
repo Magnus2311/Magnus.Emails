@@ -31,7 +31,7 @@ namespace Magnus.Emails.Helpers
             switch (senderType)
             {
                 case SenderType.Warehouse:
-                    return new Credentials(Configuration[$"{senderType.ToString()}:Email:Username"], Configuration[$"{senderType.ToString()}:Email:Password"]);
+                    return new Credentials(Configuration[$"{senderType}:Email:Username"], Configuration[$"{senderType}:Email:Password"]);
                 default:
                     return new Credentials(Configuration[$"Username"], Configuration[$"Password"]);
             }

@@ -43,10 +43,11 @@ namespace Magnus.Emails.Helpers
             switch (senderType)
             {
                 case SenderType.Warehouse:
-                default:
                     return new EmailData("Email Confirmation for Magnus Warehouse", "Magnus Warehouse", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
                 case SenderType.FutBot:
                     return new EmailData("Email Confirmation for Magnus Fut Bot", "Magnus Fut Bot", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
+                default:
+                    return new EmailData("Email Confirmation for Magnus SSO", "Magnus SSO", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
             }
         }
     }

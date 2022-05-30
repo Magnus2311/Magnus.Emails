@@ -2,12 +2,14 @@
 {
     public enum TemplateType
     {
-        SsoRegistrationDefault
+        SsoRegistrationDefault,
+        FutBotRegistration = 1
     }
 
     public enum SenderType
     {
         Default,
-        Warehouse
+        Warehouse = 1,
+        FutBot = 2
     }
 }

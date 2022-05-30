@@ -20,7 +20,7 @@ namespace Magnus.Emails.Helpers
             switch (templateType)
             {
                 case TemplateType.SsoRegistrationDefault:
-                    return new WarehouseRegistrationTemplate(InitCredentials(senderType));
+                    return new RegistrationDefaultTemplate(InitCredentials(senderType), InitEmailData(senderType));
                 default:
                     throw new NoTemplateSelectedException();
             }
@@ -31,11 +31,23 @@ namespace Magnus.Emails.Helpers
             switch (senderType)
             {
                 case SenderType.Warehouse:
+                case SenderType.FutBot:
                     return new Credentials(Configuration[$"{senderType}:Email:Username"], Configuration[$"{senderType}:Email:Password"]);
                 default:
                     return new Credentials(Configuration[$"Username"], Configuration[$"Password"]);
             }
         }
 
+        private EmailData InitEmailData(SenderType senderType)
+        {
+            switch (senderType)
+            {
+                case SenderType.Warehouse:
+                default:
+                    return new EmailData("Email Confirmation for Magnus Warehouse", "Magnus Warehouse", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
+                case SenderType.FutBot:
+                    return new EmailData("Email Confirmation for Magnus Fut Bot", "Magnus Fut Bot", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
+            }
+        }
     }
 }

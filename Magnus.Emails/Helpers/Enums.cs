@@ -3,12 +3,14 @@
     public enum TemplateType
     {
         SsoRegistrationDefault = 0,
-        ResetPasswordDefault = 1
+        FutBotRegistration = 1,
+        ResetPasswordDefault = 2
     }
 
     public enum SenderType
     {
         Default,
-        Warehouse
+        Warehouse = 1,
+        FutBot = 2
     }
 }

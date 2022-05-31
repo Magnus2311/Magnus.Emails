@@ -2,7 +2,8 @@
 {
     public enum TemplateType
     {
-        SsoRegistrationDefault
+        SsoRegistrationDefault = 0,
+        ResetPasswordDefault = 1
     }
 
     public enum SenderType

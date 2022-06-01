@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace Magnus.Emails.Pages
 {
     [IgnoreAntiforgeryToken]
-    public class RegistrationPageModel : BasePageModel
+    public class ResetPasswordPageModel : BasePageModel
     {
-        public RegistrationPageModel(RegistrationDefaultTemplate template, string contentId)
+        public ResetPasswordPageModel(ResetPasswordTemplate template, string contentId)
         {
             Template = template;
             ContentId = contentId;
         }
 
-        public RegistrationDefaultTemplate Template { get; }
+        public ResetPasswordTemplate Template { get; }
         public string ContentId { get; }
     }
 }

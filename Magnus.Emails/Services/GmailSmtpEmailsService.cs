@@ -1,5 +1,9 @@
 ﻿using Magnus.Emails.Interfaces;
+using Magnus.Emails.Models;
 using Magnus.Emails.Pages;
+using Magnus.Emails.Templates.Helpers;
+using Magnus.Emails.Templates.SSO;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -25,32 +29,11 @@ namespace Magnus.Emails.Services
             };
         }
 
-        public async Task ReSendRegistrationEmail(string url, string email, string token)
-        {
-            var message = new MailMessage(_template.Credentials.Username, email, $"New confirmation email from {_template.SiteName}", $"{url}/auth/confirmEmail/{email}&{token}")
-            {
-                IsBodyHtml = true
-            };
-            await _smtpClient.SendMailAsync(message);
-        }
-
         public async Task SendEmail()
         {
             var message = new MailMessage(_template.Credentials.Username, _template.Receiver!)
             {
                 Subject = _template.Subject
-            };
-            message.IsBodyHtml = true;
-            message.AlternateViews.Add(await GetEmbeddedImage());
-
-            await _smtpClient.SendMailAsync(message);
-        }
-
-        public async Task SendResetPasswordEmail(string url, string email, string token, string template)
-        {
-            var message = new MailMessage(_template.Credentials.Username, email)
-            {
-                Subject = $"Reset password for {_template.SiteName}"
             };
             message.IsBodyHtml = true;
             message.AlternateViews.Add(await GetEmbeddedImage());
@@ -69,10 +52,28 @@ namespace Magnus.Emails.Services
                 MediaType = "image/png",
                 Name = "logo_transparent.png",
             };
-            var htmlBody = await _viewRenderService.RenderToStringAsync("RegistrationPage", new RegistrationPageModel(_template, res.ContentId));
+            var pageData = GetPageData(res.ContentId);
+            var htmlBody = await _viewRenderService.RenderToStringAsync(pageData.PageName, pageData.PageModel);
             var alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
             alternateView.LinkedResources.Add(res);
             return alternateView;
+        }
+
+        private (string PageName, dynamic PageModel) GetPageData(string contentId)
+        {
+            switch (_template.TemplateType)
+            {
+                case TemplateType.FutBotRegistration:
+                case TemplateType.SsoRegistrationDefault:
+                    if (_template is RegistrationDefaultTemplate registrationDefaultTemplate)
+                        return ("RegistrationPage", new RegistrationPageModel(registrationDefaultTemplate, contentId));
+                    break;
+                case TemplateType.ResetPasswordDefault:
+                    if (_template is ResetPasswordTemplate resetPasswordTemplate)
+                        return ("ResetPasswordPage", new ResetPasswordPageModel(resetPasswordTemplate, contentId));
+                    break;
+            }
+            return ("", new RegistrationPageModel((_template as RegistrationDefaultTemplate)!, contentId));
         }
     }
 }

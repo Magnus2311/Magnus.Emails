@@ -1,8 +1,9 @@
+using Magnus.Emails.Models.Interfaces;
 using Magnus.Emails.Templates.Helpers;
 
 namespace Magnus.Emails.Models.DTOs
 {
-    public record RegistrationEmailDTO
+    public record ResetPasswordEmailDTO : IRequestDTO
     {
         public SenderType SenderType { get; init; }
         public string? Username { get; init; }

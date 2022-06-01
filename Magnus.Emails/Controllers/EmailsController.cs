@@ -16,10 +16,17 @@ namespace Magnus.Emails.Controllers
             _emailsSender = emailsSender;
         }
 
-        [HttpPost]
+        [HttpPost("registration")]
         public async Task<IActionResult> SendRegistrationEmail(RegistrationEmailDTO registrationEmailDTO)
         {
             await _emailsSender.SendEmail(TemplateType.SsoRegistrationDefault, registrationEmailDTO);
+            return Ok();
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> SendResetPasswordEmail(ResetPasswordEmailDTO resetPasswordEmailDTO)
+        {
+            await _emailsSender.SendEmail(TemplateType.ResetPasswordDefault, resetPasswordEmailDTO);
             return Ok();
         }
     }

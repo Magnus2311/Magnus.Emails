@@ -37,7 +37,7 @@ namespace Magnus.Emails.Services
         }
 
 
-        public async Task<string> RenderToStringAsync<T>(string pageName, T model) where T : PageModel
+        public async Task<string> RenderToStringAsync<T>(string pageName, T model)
         {
             if (_httpContext is null
                 || _httpContext.HttpContext is null

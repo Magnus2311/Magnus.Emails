@@ -2,6 +2,7 @@
 using Magnus.Emails.Interfaces;
 using Magnus.Emails.Models.DTOs;
 using Magnus.Emails.Templates.Helpers;
+using Magnus.Emails.Models.Interfaces;
 
 namespace Magnus.Emails.Services.ServicesSenders
 {
@@ -16,12 +17,15 @@ namespace Magnus.Emails.Services.ServicesSenders
             _viewRenderService = viewRenderService;
         }
 
-        public async Task SendEmail(TemplateType templateType, RegistrationEmailDTO registrationEmailDTO)
+        public async Task SendEmail(TemplateType templateType, IRequestDTO requestDTO)
         {
-            var template = _templateFactory.InitTemplate(templateType, registrationEmailDTO.SenderType);
-            template.Receiver = registrationEmailDTO.Email;
-            template.CallbackToken = registrationEmailDTO.Token;
-            await new GmailSmtpEmailsService(template, _viewRenderService).SendEmail();
+            var template = _templateFactory.InitTemplate(templateType, requestDTO);
+            if (template != null)
+            {
+                template.Receiver = requestDTO.Email;
+                template.CallbackToken = requestDTO.Token;
+                await new GmailSmtpEmailsService(template, _viewRenderService).SendEmail();
+            }
         }
     }
 }

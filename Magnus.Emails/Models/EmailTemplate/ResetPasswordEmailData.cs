@@ -1,8 +1,10 @@
-namespace Magnus.Emails.Models
+using Magnus.Emails.Models.Interfaces;
+
+namespace Magnus.Emails.Models.EmailTemplates
 {
-    public class EmailData
+    public class ResetPasswordEmailData : IEmailData
     {
-        public EmailData(string subject, string siteName, string logoPath)
+        public ResetPasswordEmailData(string subject, string siteName, string logoPath)
         {
             Subject = subject;
             SiteName = siteName;

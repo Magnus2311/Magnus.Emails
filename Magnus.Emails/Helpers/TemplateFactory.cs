@@ -67,11 +67,11 @@ namespace Magnus.Emails.Helpers
             switch (senderType)
             {
                 case SenderType.Warehouse:
-                    return new ResetPasswordEmailData("Email Confirmation for Magnus Warehouse", "Magnus Warehouse", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
+                    return new ResetPasswordEmailData("Reset password confirmation for Magnus Warehouse", "Magnus Warehouse", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
                 case SenderType.FutBot:
-                    return new ResetPasswordEmailData("Email Confirmation for Magnus Fut Bot", "Magnus Fut Bot", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
+                    return new ResetPasswordEmailData("Reset password confirmation for Magnus Fut Bot", "Magnus Fut Bot", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
                 default:
-                    return new ResetPasswordEmailData("Email Confirmation for Magnus SSO", "Magnus SSO", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
+                    return new ResetPasswordEmailData("Reset password confirmation for Magnus SSO", "Magnus SSO", "./wwwroot/logos/warehouse/warehouse-flat-logo.png");
             }
         }
     }

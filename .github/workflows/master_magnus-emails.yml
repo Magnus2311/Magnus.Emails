@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'magnus-emails'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_159E04958C2B44A68C4E6E78DDA40990 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1E6C24C20A514589A1C8C86512507160 }}
           package: .

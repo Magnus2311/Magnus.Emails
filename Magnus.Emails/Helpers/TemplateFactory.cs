@@ -45,7 +45,7 @@ namespace Magnus.Emails.Helpers
                 case SenderType.FutBot:
                     return new Credentials(Configuration[$"{senderType}:Email:Username"], Configuration[$"{senderType}:Email:Password"]);
                 default:
-                    return new Credentials(Configuration[$"Username"], Configuration[$"Password"]);
+                    return new Credentials("magnus.sso.oss@gmail.com", Configuration[$"Password"]);
             }
         }
 
